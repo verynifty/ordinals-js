@@ -18,7 +18,7 @@ async function makeRPCCall(method, params) {
 
 (async () => {
 
-    const txHashes = [
+    let txHashes = [
         "051984d19027f4197fe1e03b0f6d0751c6ed8a32fefb2815e07a022fba1aea23",
         "b3da1c31e1649edb159733eeba86a482b0c2d445aa5c5d4d0869e30e712fc119",
         "4e7aee32ffe0541efac2d44c4bd227de8d4f53000ff425adb991900051bee229",
@@ -34,11 +34,33 @@ async function makeRPCCall(method, params) {
         "97f6b109c3991116720011c427acb68b6736bd4a3144a67dfeffc299411c0ce0"
     ]
 
+    /*
+
+    let blockHash = await makeRPCCall('getblockhash', [775878])
+    let block = await makeRPCCall('getblock', [blockHash])
+   
+    txHashes = block.tx;
+
+    */
+
+    let index = 0;
     for (const txHash of txHashes) {
+
         let transactionRaw = await makeRPCCall('getrawtransaction', [txHash])
+
+
+        console.log(index++, "/", txHashes.length)
         let tx = new Transaction(txHash, transactionRaw);
-        console.log("Hash", txHash, tx.isOrdinalGenesis(), tx.getContentType(), "Content lenght:", tx.getContentData().length)
-        tx.contentToFile()
+        if (tx.isOrdinalGenesis()) {
+            console.log("Hash", txHash, tx.isOrdinalGenesis(), tx.getContentType(), "Content length:", tx.getContentData().length)
+            tx.contentToFile()
+        } else {
+            console.log("Not an ordinal")
+        }
+
+
+
+
     }
 
 
