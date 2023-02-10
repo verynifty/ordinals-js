@@ -1,0 +1,51 @@
+<html lang="en">
+  <head>
+    <style>
+      body {
+        background-color: black;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+      
+      .raindrop {
+        position: absolute;
+        width: 1px;
+        height: 100px;
+        background-color: red;
+        animation: fall 8s ease-in-out;
+      }
+      
+      @keyframes fall {
+        0% {
+          transform: translateY(-100vh);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+      
+      .quote {
+        color: yellow;
+        font-size: 42px;
+        font-family: Arial, sans-serif;
+        text-shadow: 0 0 9px black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quote"> ❤️ We are all Satoshi ❤️</div>
+    <script>
+      const body = document.querySelector("body");
+      setInterval(function() {
+        let drop = document.createElement("div");
+        drop.classList.add("raindrop");
+        drop.style.left = `${Math.floor(100 * Math.random())}vw`;
+        drop.style.animationDelay = `${Math.floor(Math.random() * 8)}s`;
+        body.appendChild(drop);
+      }, 200);
+    </script>
+  </body>
+</html>
